@@ -12,7 +12,7 @@ from PyQt5.QtCore import pyqtSignal
 from staff import staff
 from admin import Admin
 from students import Students
-from courses import Classes
+from courses import Courses
 
 
 class ClickableLabel(QLabel):
@@ -28,21 +28,26 @@ class ClickableLabel(QLabel):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        QFontDatabase.addApplicationFont("fonts\ProtestRiot-Regular.ttf")
+        QFontDatabase.addApplicationFont("fonts\Exo2-Regular.ttf")
+        QFontDatabase.addApplicationFont("fonts\Exo2-SemiBold.ttf")
         self.setWindowTitle("Learning System")
         self.setGeometry(0, 0, 2000, 1000)
         self.setStyleSheet("background-color:  #5558AC; border-radius:40px;")
 
         self.content_widgets = {
             "Home": Home(),
-            "Classes": Classes(),
+            "Classes": Courses(),
             "Admin": Admin(),
             "Students": Students(),
             "Staff": staff(),
         }
 
         self.UiComponents()
-        self.show()
+        # self.show()
+        # Admin.importing_csv.clicked.connect(self.open_file_dialog)
         self.show_content("Home")
+        self.showMaximized()
 
     def UiComponents(self):
         layout = QHBoxLayout()
@@ -139,6 +144,12 @@ class MainWindow(QMainWindow):
     def show_content(self, content):
         if self.current_content == content:
             return
+        # s = staff()
+        # a = Admin()
+        # a.open_file_dialog()
+        # data = a.data
+        # if content == "Staff":
+        #     staff.update_tabel(self, data)
 
         self.clear_content_layout()
         content_widget = self.content_widgets.get(content)

@@ -10,15 +10,21 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtCore import pyqtSignal
 
+from math import inf
+from staff import staff
 
-
-
+data = []
+students_data = []
+courses_std = []
 
 
 class Admin(QWidget):
     def __init__(self):
         super().__init__()
         self.setStyleSheet("background-color: #F9F8FD;")
+        self.data = data
+        self.students_data = students_data
+        self.courses_std = courses_std
         self.UiComponents()
 
     def UiComponents(self):
@@ -27,13 +33,16 @@ class Admin(QWidget):
         self.title.setStyleSheet(" color: rgba(63,71,105)")
         self.title.setGeometry(40, 40, 300, 100)
 
-        self.searchbar = QLineEdit(self)
-        self.searchbar.setPlaceholderText("Search")
-
-        self.searchbar.setStyleSheet(
+        self.searchBox = QLineEdit(self)
+        self.searchBox.setPlaceholderText("Search")
+        self.searchBox.setFont(QFont("Arial", 12))
+        self.searchBox.setGeometry(
+            600, 75, 280, 40
+        )  # Set the geometry for the search box
+        self.searchBox.setStyleSheet(
             "border-radius : 10px; background-color: #EDE1F7; color: black; padding-left: 55px ; padding-right:30px ;font-size: 15px"
         )
-        self.searchbar.setGeometry(600, 75, 280, 40)
+        self.searchBox.textChanged.connect(self.filter_table)
 
         # search icon
         search_label = QLabel(self)
@@ -125,40 +134,58 @@ class Admin(QWidget):
         headertabel.setShowGrid(False)
         headertabel.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        tableWidget = QTableWidget(self)
-        tableWidget.setRowCount(5)
-        tableWidget.setColumnCount(3)
-        tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
-        tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
-        tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
-        tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
-        tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
+        self.tableWidget = QTableWidget(self)
+        self.tableWidget.setRowCount(5)
+        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
+        self.tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
+        self.tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
+        self.tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
+        self.tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
+        self.tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
+        self.tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
+        self.tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
 
-        tableWidget.setItem(0, 2, QTableWidgetItem("shahdd"))
-        tableWidget.setItem(1, 2, QTableWidgetItem("hasnaa4"))
-        tableWidget.setItem(2, 2, QTableWidgetItem("Ayatt"))
-        tableWidget.setItem(3, 2, QTableWidgetItem("Eman304"))
+        self.tableWidget.setItem(0, 2, QTableWidgetItem("shahdd"))
+        self.tableWidget.setItem(1, 2, QTableWidgetItem("hasnaa4"))
+        self.tableWidget.setItem(2, 2, QTableWidgetItem("Ayatt"))
+        self.tableWidget.setItem(3, 2, QTableWidgetItem("Eman304"))
 
-        tableWidget.setFont(QFont("Times", 12))
-        tableWidget.horizontalHeader().setVisible(False)
-        tableWidget.verticalHeader().setVisible(False)
-        tableWidget.setShowGrid(False)
+        self.tableWidget.setFont(QFont("Times", 12))
+        self.tableWidget.horizontalHeader().setVisible(False)
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setShowGrid(False)
 
         # Table will fit the screen horizontally
-        tableWidget.setGeometry(30, 700, 870, 200)
-        tableWidget.setStyleSheet(
+        self.tableWidget.setGeometry(30, 700, 870, 200)
+        self.tableWidget.setStyleSheet(
             "QTableWidget { border: 0px; background-color:#F4F4FE; color: black ; border-radius : 15px;padding-left:20px;padding-top:7px;selection-background-color: #EDE1F7; selection-color: black}"
         )
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(10)
         shadow.setOffset(0, 0)
         shadow.setColor(QColor("#BD80C5"))
-        tableWidget.setGraphicsEffect(shadow)
-        tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setGraphicsEffect(shadow)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+
+    def filter_table(self):
+        search_text = self.searchBox.text().strip().lower()
+        if not search_text:
+            for row in range(self.tableWidget.rowCount()):
+                self.tableWidget.setRowHidden(row, False)
+            return
+
+        for row in range(self.tableWidget.rowCount()):
+            match_found = False
+            for col in range(self.tableWidget.columnCount()):
+                item = self.tableWidget.item(row, col)
+                if item is not None and search_text in item.text().lower():
+                    match_found = True
+                    break
+            self.tableWidget.setRowHidden(row, not match_found)
+
+    # data = []
 
     def open_file_dialog(self):
         file_dialog = QFileDialog()
@@ -167,17 +194,60 @@ class Admin(QWidget):
             "All Files (*.*)"
         )  # You can set specific file filters here
         if file_dialog.exec_():
+            self.cond = 1
             selected_files = file_dialog.selectedFiles()
             for file_path in selected_files:
                 # Process the selected file
-                self.process_file(file_path)
+                # self.process_file(file_path)
+                self.selected_file = file_path
+                print("hello", self.selected_file)
+            # if self.cond == 3:
+            #     data.clear()
+            #     self.data.clear()
+            # students_data = []
+            # self.students_data = []
 
-                for row in file_path:
-                    print(row)
-
-    def process_file(self, file_path):
-        with open(file_path, "r") as file:
+        # self.data = []
+        with open(self.selected_file, "r") as file:
             reader = csv.reader(file)
+            i, k, j = 0, 0, 0
+            self.data.append(inf)
+            students_data.append(inf)
             for row in reader:
-                file_path.append(row)
-        return file_path
+                for col_ind, col in enumerate(row):
+                    if col_ind >= 0 and col_ind <= 3:
+                        students_data.insert(k, col)
+                        k += 1
+                    elif col_ind >= 4 and col_ind <= 6:
+                        self.data.insert(i, col)
+                        print(col)
+                        i += 1
+                    elif col_ind >= 8 and col_ind <= 17:
+                        if col != "":
+                            courses_std.insert(k, col)
+                        j += 1
+
+            self.cond += 1
+
+        # s = staff()
+        # # s.get_data(self.data)
+        # s.update_tabel(self.data)
+        # s.tableWidget.repaint()
+        # print(self.data)
+        # print(len(self.data))
+        # print(students_data)
+        # print(len(students_data))
+        print(courses_std)
+        print(len(courses_std))
+
+    # def process_file(self, file_path):
+    #     rows = []
+    #     with open(file_path, "r") as file:
+    #         reader = csv.reader(file)
+    #         row_ind = 0
+    #         for row in reader:
+    #             col_ind = 0
+    #             for col in row:
+    #                 print(row)
+
+    #     return file_path

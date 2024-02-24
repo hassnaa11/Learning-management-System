@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore
 import sys
 
+# from main import MainWindow, ClickableLabel
+
 
 class login_window(QMainWindow):
     def __init__(self):
@@ -121,12 +123,17 @@ class login_window(QMainWindow):
             "}; border-radius : 25px;background-color: rgba(63,71,105) ;color:white"
         )
         self.login_btn.setCursor(Qt.PointingHandCursor)
+        # self.login_btn.connect(self.login)
 
         # self.label3 = QLabel(self)
         # # self.label3.setText("Edrak")
         # self.label3.move(95, 55)
         # self.label3.setFont(QFont("Protest Riot", 18))
         # self.label3.setStyleSheet("color: black; font: Italic")
+
+    # def login():
+    #     win = MainWindow()
+    #     win.show()
 
 
 app = QApplication(sys.argv)

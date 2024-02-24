@@ -1,4 +1,3 @@
-
 import PyQt5
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
@@ -9,6 +8,8 @@ import csv
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from admin import Admin
+from add_student import AddStudent
 
 
 class Students(QWidget):
@@ -86,27 +87,29 @@ class Students(QWidget):
         self.list.setIcon(self.icon)
 
         # add student button
-        addStudent = QPushButton(self)
-        addStudent.setText("Add Student")
-        addStudent.setFont(QFont("Exo2", 11))
-        addStudent.setGeometry(750, 130, 120, 40)
-        addStudent.setStyleSheet(
+        self.addStudent = QPushButton(self)
+        self.addStudent.setText("Add Student")
+        self.addStudent.setFont(QFont("Exo2", 11))
+        self.addStudent.setGeometry(750, 130, 120, 40)
+        self.addStudent.setStyleSheet(
             " QPushButton::hover"
             "{"
             "background-color : #7A51A1;"
             "};border-radius : 10px; background-color: #B67ADC; color: white;"
         )
-        addStudent.setCursor(Qt.PointingHandCursor)
+        self.addStudent.setCursor(Qt.PointingHandCursor)
+        self.addStudent.clicked.connect(self.open_add_student_window)
 
         # search textbox
-        searchBox = QLineEdit(self)
-        searchBox.setPlaceholderText("Search")
-        searchBox.setFont(QFont("Arial", 12))
-        searchBox.move(620, 405)
-        searchBox.setGeometry(750, 70, 280, 40)
-        searchBox.setStyleSheet(
+        self.searchBox = QLineEdit(self)
+        self.searchBox.setPlaceholderText("Search")
+        self.searchBox.setFont(QFont("Arial", 12))
+        self.searchBox.move(620, 405)
+        self.searchBox.setGeometry(750, 70, 280, 40)
+        self.searchBox.setStyleSheet(
             "border-radius : 10px; background-color: #EDE1F7; color: black; padding-left: 55px"
         )
+        self.searchBox.textChanged.connect(self.filter_table)
         # search icon
         search_label = QLabel(self)
         pixmap = QPixmap("images/icons8-search-30.png")
@@ -127,7 +130,7 @@ class Students(QWidget):
         headertabel.setFont(QFont("Exo2", 14))
         headertabel.setGeometry(40, 250, 1010, 46)
         headertabel.setStyleSheet(
-            "QTableWidget { border: 0px; background-color: #F4F4FE; color: #536e8f; border-radius : 20px;padding-left:15px;selection-background-color: #EDE1F7; selection-color: black}"
+            "QTableWidget { border: 0px; background-color: #F4F4FE; color: #536e8f; border-radius : 20px;padding-left:15px;selection-background-color: #EDE1F7; selection-color: black; }"
         )
         headertabel.horizontalHeader().setVisible(False)
         headertabel.verticalHeader().setVisible(False)
@@ -140,46 +143,76 @@ class Students(QWidget):
         shadow.setColor(QColor("#BD80C5"))
         headertabel.setGraphicsEffect(shadow)
 
-        tableWidget = QTableWidget(self)
-        tableWidget.setRowCount(5)
-        tableWidget.setColumnCount(4)
-        tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
-        tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
-        tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
-        tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
-        tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
+        self.tableWidget = QTableWidget(self)
+        self.tableWidget.setRowCount(5)
+        self.tableWidget.setColumnCount(4)
 
-        tableWidget.setItem(0, 2, QTableWidgetItem("second"))
-        tableWidget.setItem(1, 2, QTableWidgetItem("third"))
-        tableWidget.setItem(2, 2, QTableWidgetItem("first"))
-        tableWidget.setItem(3, 2, QTableWidgetItem("fourth"))
-        tableWidget.setItem(0, 3, QTableWidgetItem("SBE"))
-        tableWidget.setItem(2, 3, QTableWidgetItem("ARC"))
-        tableWidget.setItem(1, 3, QTableWidgetItem("CMP"))
-        tableWidget.setItem(3, 3, QTableWidgetItem("CVE"))
-        tableWidget.resizeColumnToContents(10)
-        tableWidget.resizeColumnToContents(5)
+        a = Admin()
+        a.open_file_dialog()
 
-        tableWidget.setFont(QFont("Times", 12))
-        tableWidget.horizontalHeader().setVisible(False)
-        tableWidget.verticalHeader().setVisible(False)
-        tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        tableWidget.setShowGrid(False)
+        i = 4
+        for row in range(4):
+            for col in range(4):
+                self.tableWidget.setItem(row, col, QTableWidgetItem(a.students_data[i]))
+                i += 1
+
+        # tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
+        # tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
+        # tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
+        # tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
+        # tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
+        # tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
+        # tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
+        # tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
+
+        # tableWidget.setItem(0, 2, QTableWidgetItem("second"))
+        # tableWidget.setItem(1, 2, QTableWidgetItem("third"))
+        # tableWidget.setItem(2, 2, QTableWidgetItem("first"))
+        # tableWidget.setItem(3, 2, QTableWidgetItem("fourth"))
+        # tableWidget.setItem(0, 3, QTableWidgetItem("SBE"))
+        # tableWidget.setItem(2, 3, QTableWidgetItem("ARC"))
+        # tableWidget.setItem(1, 3, QTableWidgetItem("CMP"))
+        # tableWidget.setItem(3, 3, QTableWidgetItem("CVE"))
+        # self.tableWidget.resizeColumnToContents(10)
+        # self.tableWidget.resizeColumnToContents(5)
+
+        self.tableWidget.setFont(QFont("Times", 12))
+        self.tableWidget.horizontalHeader().setVisible(False)
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setShowGrid(False)
 
         # Table will fit the screen horizontally
-        tableWidget.setGeometry(40, 310, 1010, 600)
-        tableWidget.setStyleSheet(
+        self.tableWidget.setGeometry(40, 310, 1010, 600)
+        self.tableWidget.setStyleSheet(
             "QTableWidget { border: 0px; background-color: #F4F4FE; color: #536e8f; border-radius : 15px;padding-left:15px;selection-background-color: #EDE1F7; selection-color: black}"
         )
-        tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(10)
         shadow.setOffset(0, 0)
         shadow.setColor(QColor("#BD80C5"))
-        tableWidget.setGraphicsEffect(shadow)
+        self.tableWidget.setGraphicsEffect(shadow)
+
+    def filter_table(self):
+        search_text = self.searchBox.text().strip().lower()
+        if not search_text:
+            for row in range(self.tableWidget.rowCount()):
+                self.tableWidget.setRowHidden(row, False)
+            return
+
+        for row in range(self.tableWidget.rowCount()):
+            match_found = False
+            for col in range(self.tableWidget.columnCount()):
+                item = self.tableWidget.item(row, col)
+                if item is not None and search_text in item.text().lower():
+                    match_found = True
+                    break
+            self.tableWidget.setRowHidden(row, not match_found)
+
+    def open_add_student_window(self):
+        self.add_student_window = AddStudent()
+        self.add_student_window.show()
 
 
 # def go_to_anotherWindow(self):
@@ -187,5 +220,3 @@ class Students(QWidget):
 # self.addstudent = AddStudent()
 # self.addstudent.show()
 # self.hide()
-
-
