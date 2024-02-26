@@ -13,6 +13,7 @@ from PyQt5.uic.properties import QtCore
 import csv
 import math
 from add_staff import AddStaff
+from add_staff import data_staff
 
 
 class staff(QMainWindow):
@@ -149,7 +150,7 @@ class staff(QMainWindow):
         headertabel.setGraphicsEffect(shadow)
 
         self.tableWidget = QTableWidget(self)
-        self.tableWidget.setRowCount(5)
+        # self.tableWidget.setRowCount(5)
         self.tableWidget.setColumnCount(3)
 
         # a = Admin()
@@ -220,23 +221,35 @@ class staff(QMainWindow):
         #     # self.UiComponents()
         #     # self.show()
 
-    def update_tabel(self, data):
-        # self.hide()
-        # a = Admin()
-        # a.open_file_dialog()
-        # self.tableWidget.clearContents()
-        i = 3
-        print("uiiii")
-        print("DATA: ", data)
-        # print("lenn: ", (math.sqrt(len(a.data))) - 1)
-        for row in range(4):
-            for col in range(3):
-                self.tableWidget.setItem(row, col, QTableWidgetItem(data[i]))
-                # self.tableWidget.show()
-                i += 1
-        # self.repaint()
-        # self.UiComponents()
-        # self.show()
+    def update_table(self, data_staff):
+        print("inside update table")
+        self.tableWidget.setRowCount(len(data_staff))
+        row = 0
+        for id in data_staff:
+            print("inside the table")
+            self.tableWidget.setItem(row, 0, QTableWidgetItem(data_staff[id].iid))
+            self.tableWidget.setItem(row, 1, QTableWidgetItem(data_staff[id].name))
+            self.tableWidget.setItem(row, 2, QTableWidgetItem(data_staff[id].grade))
+            row += 1
+            print("id", id)
+
+    # def update_tabel(self, data):
+    #     # self.hide()
+    #     # a = Admin()
+    #     # a.open_file_dialog()
+    #     # self.tableWidget.clearContents()
+    #     i = 3
+    #     print("uiiii")
+    #     print("DATA: ", data)
+    #     # print("lenn: ", (math.sqrt(len(a.data))) - 1)
+    #     for row in range(4):
+    #         for col in range(3):
+    #             self.tableWidget.setItem(row, col, QTableWidgetItem(data[i]))
+    #             # self.tableWidget.show()
+    #             i += 1
+    #     # self.repaint()
+    #     # self.UiComponents()
+    #     # self.show()
 
     def filter_table(self):
         search_text = self.searchBox.text().strip().lower()
@@ -255,5 +268,6 @@ class staff(QMainWindow):
             self.tableWidget.setRowHidden(row, not match_found)
 
     def open_add_staff_window(self):
+        self.update_table(data_staff)
         self.add_staff_window = AddStaff()
         self.add_staff_window.show()

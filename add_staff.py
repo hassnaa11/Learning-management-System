@@ -14,20 +14,23 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
 import pandas as pd
+from data import Data
+
+data_staff = {}
 
 
 class AddStaff(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setGeometry(200, 20, 1200, 1000)
-        self.setWindowTitle("Edraak")
+        self.setWindowTitle("Add New Staff")
         self.UiComponents()
         # self.show()
-        self.data_file = "data.xlsx"
-        try:
-            self.existing_data = pd.read_excel(self.data_file)
-        except FileNotFoundError:
-            self.existing_data = pd.DataFrame()
+        # self.data_file = "data.xlsx"
+        # try:
+        #     self.existing_data = pd.read_excel(self.data_file)
+        # except FileNotFoundError:
+        #     self.existing_data = pd.DataFrame()
 
     def UiComponents(self):
         QFontDatabase.addApplicationFont("./ProtestRiot-Regular.ttf")
@@ -82,7 +85,7 @@ class AddStaff(QMainWindow):
         self.idBox = QLineEdit(self)
         self.idBox.move(620, 785)
         self.idBox.resize(300, 50)
-        self.idBox.setPlaceholderText("Position")
+        self.idBox.setPlaceholderText("ID")
         self.idBox.setFont(QFont("Protest Riot", 12))
         self.idBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left: 65px"
@@ -118,7 +121,7 @@ class AddStaff(QMainWindow):
         self.gradeBox = QLineEdit(self)
         self.gradeBox.move(775, 465)
         self.gradeBox.resize(145, 50)
-        self.gradeBox.setPlaceholderText("Id")
+        self.gradeBox.setPlaceholderText("Position")
         self.gradeBox.setFont(QFont("Protest Riot", 12))
         self.gradeBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left: 65px"
@@ -205,25 +208,28 @@ class AddStaff(QMainWindow):
         else:
             checked = "Male"
 
+        data_staff[iid] = Data(
+            iid, name, age, grade, number, email, department, None, checked, []
+        )
         # Append new data to the existing data
-        new_data = pd.DataFrame(
-            {
-                "Name": [name],
-                "Age": [age],
-                "ID": [grade],
-                "Phone Number": [number],
-                "Email": [email],
-                "Department": [department],
-                "Position": [iid],
-                "Gender": [checked],
-            }
-        )
-        self.existing_data = pd.concat(
-            [self.existing_data, new_data], ignore_index=True
-        )
+        # new_data = pd.DataFrame(
+        #     {
+        #         "Name": [name],
+        #         "Age": [age],
+        #         "ID": [grade],
+        #         "Phone Number": [number],
+        #         "Email": [email],
+        #         "Department": [department],
+        #         "Position": [iid],
+        #         "Gender": [checked],
+        #     }
+        # )
+        # self.existing_data = pd.concat(
+        #     [self.existing_data, new_data], ignore_index=True
+        # )
 
-        # Save the combined data to the Excel file
-        self.existing_data.to_excel(self.data_file, index=False)
+        # # Save the combined data to the Excel file
+        # self.existing_data.to_excel(self.data_file, index=False)
 
         self.close()
 

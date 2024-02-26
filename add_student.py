@@ -14,20 +14,26 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
 import pandas as pd
+from data import Data
+
+# from students import Students
+
+data_std = {}
 
 
 class AddStudent(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.data_std = data_std
         self.setGeometry(200, 20, 1200, 1000)
-        self.setWindowTitle("Edraak")
+        self.setWindowTitle("Add New Student")
         self.UiComponents()
         # self.show()
-        self.data_file = "data.xlsx"
-        try:
-            self.existing_data = pd.read_excel(self.data_file)
-        except FileNotFoundError:
-            self.existing_data = pd.DataFrame()
+        # self.data_file = "data.xlsx"
+        # try:
+        #     self.existing_data = pd.read_excel(self.data_file)
+        # except FileNotFoundError:
+        #     self.existing_data = pd.DataFrame()
 
     def UiComponents(self):
         QFontDatabase.addApplicationFont("./ProtestRiot-Regular.ttf")
@@ -215,26 +221,33 @@ class AddStudent(QMainWindow):
         else:
             checked = "Male"
 
+        data_std[iid] = Data(
+            iid, name, age, grade, number, email, department, year, checked, []
+        )
+        # Students.update_table(Students, data_std)
+
+        print("data: ", data_std[iid].name)
+
         # Append new data to the existing data
-        new_data = pd.DataFrame(
-            {
-                "Name": [name],
-                "Age": [age],
-                "Grade": [grade],
-                "Phone Number": [number],
-                "Email": [email],
-                "Department": [department],
-                "ID": [iid],
-                "Year": [year],
-                "Gender": [checked],
-            }
-        )
-        self.existing_data = pd.concat(
-            [self.existing_data, new_data], ignore_index=True
-        )
+        # new_data = pd.DataFrame(
+        #     {
+        #         "Name": [name],
+        #         "Age": [age],
+        #         "Grade": [grade],
+        #         "Phone Number": [number],
+        #         "Email": [email],
+        #         "Department": [department],
+        #         "ID": [iid],
+        #         "Year": [year],
+        #         "Gender": [checked],
+        #     }
+        # )
+        # self.existing_data = pd.concat(
+        #     [self.existing_data, new_data], ignore_index=True
+        # )
 
         # Save the combined data to the Excel file
-        self.existing_data.to_excel(self.data_file, index=False)
+        # self.existing_data.to_excel(self.data_file, index=False)
 
         self.close()
 

@@ -18,6 +18,10 @@ import sys
 from admin import Admin
 import pandas as pd
 
+# from hash_table import HashTable, Node
+from add_student import data_std
+from add_staff import data_staff
+
 courses_list = [[], [], [], [], [], [], [], [], [], []]
 staff_list = [[], [], [], [], [], [], [], [], [], []]
 
@@ -1068,41 +1072,52 @@ class AddNewPersontoCourseDetails(QMainWindow):
         else:
             position = self.gradeBox.text()
 
-        list = [
-            "Hasnaa Hossam",
-            "222",
-            "Shahd Ragab",
-            "111",
-            "Mohamed Mostafa",
-            "1212",
-        ]
+        # list = [
+        #     "Hasnaa Hossam",
+        #     "222",
+        #     "Shahd Ragab",
+        #     "111",
+        #     "Mohamed Mostafa",
+        #     "1212",
+        # ]
 
         match self.course_code:
             case "CMP 2210":
                 ind = 0
+                course_name = "Data Structures & Algorithms"
             case "CMP 2242":
                 ind = 1
+                course_name = "Database"
             case "CHE 1241":
                 ind = 2
+                course_name = "Chemistry"
             case "EPE 1241":
                 ind = 3
+                course_name = "Circuits"
             case "CMP 1242":
                 ind = 4
+                course_name = "OOP Principles"
             case "MTH 1242":
                 ind = 5
+                course_name = "Linear Algebra"
             case "ELC 2242":
                 ind = 6
+                course_name = "Elctronics"
             case "SBE 2230":
                 ind = 7
+                course_name = "Bio-Measurements"
             case "SBE 2240":
                 ind = 8
+                course_name = "Bio-Statistics"
             case "MEC 102":
                 ind = 9
+                course_name = "Fluids & Thermo Dynamics"
 
         if self.checked == "student":
-            if name in list and id in list:
+            if id in data_std:
                 print("hweeee:: ", self.course_code)
                 if (name, grade) not in self.mycourses_list[ind]:
+                    data_std[id].courses.append((course_name, grade))
                     self.mycourses_list[ind].append((name, grade))
                     self.close()
                 else:
@@ -1114,8 +1129,9 @@ class AddNewPersontoCourseDetails(QMainWindow):
                 self.errorDialog(f"The {self.checked} doesn't exist!")
 
         else:
-            if name in list and id in list:
+            if id in data_staff:
                 if name not in self.staff_list[ind]:
+                    data_staff[id].courses.append(course_name)
                     self.staff_list[ind].append(name)
                     self.close()
                 else:

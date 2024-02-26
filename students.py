@@ -11,6 +11,8 @@ from PyQt5.QtCore import *
 from admin import Admin
 from add_student import AddStudent
 
+from add_student import data_std
+
 
 class Students(QWidget):
     def __init__(self):
@@ -144,17 +146,19 @@ class Students(QWidget):
         headertabel.setGraphicsEffect(shadow)
 
         self.tableWidget = QTableWidget(self)
-        self.tableWidget.setRowCount(5)
+
         self.tableWidget.setColumnCount(4)
 
-        a = Admin()
-        a.open_file_dialog()
+        # self.update_table()
 
-        i = 4
-        for row in range(4):
-            for col in range(4):
-                self.tableWidget.setItem(row, col, QTableWidgetItem(a.students_data[i]))
-                i += 1
+        # a = Admin()
+        # a.open_file_dialog()
+
+        # i = 4
+        # for row in range(4):
+        #     for col in range(4):
+        #         self.tableWidget.setItem(row, col, QTableWidgetItem(a.students_data[i]))
+        #         i += 1
 
         # tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
         # tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
@@ -194,6 +198,19 @@ class Students(QWidget):
         shadow.setColor(QColor("#BD80C5"))
         self.tableWidget.setGraphicsEffect(shadow)
 
+    def update_table(self, data_std):
+        print("inside update table")
+        self.tableWidget.setRowCount(len(data_std))
+        row = 0
+        for id in data_std:
+            print("inside the table")
+            self.tableWidget.setItem(row, 0, QTableWidgetItem(data_std[id].iid))
+            self.tableWidget.setItem(row, 1, QTableWidgetItem(data_std[id].name))
+            self.tableWidget.setItem(row, 2, QTableWidgetItem(data_std[id].grade))
+            self.tableWidget.setItem(row, 3, QTableWidgetItem(data_std[id].department))
+            row += 1
+            print("id", id)
+
     def filter_table(self):
         search_text = self.searchBox.text().strip().lower()
         if not search_text:
@@ -211,6 +228,7 @@ class Students(QWidget):
             self.tableWidget.setRowHidden(row, not match_found)
 
     def open_add_student_window(self):
+        self.update_table(data_std)
         self.add_student_window = AddStudent()
         self.add_student_window.show()
 

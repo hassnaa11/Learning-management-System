@@ -11,6 +11,8 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore
 import sys
+from main import MainWindow
+import csv
 
 # from main import MainWindow, ClickableLabel
 
@@ -25,7 +27,7 @@ class login_window(QMainWindow):
 
     def UiComponents(self):
         # Protest Riot Font
-        QFontDatabase.addApplicationFont("./ProtestRiot-Regular.ttf")
+        QFontDatabase.addApplicationFont("fonts\ProtestRiot-Regular.ttf")
 
         # background gradient
         p = QPalette()
@@ -123,17 +125,47 @@ class login_window(QMainWindow):
             "}; border-radius : 25px;background-color: rgba(63,71,105) ;color:white"
         )
         self.login_btn.setCursor(Qt.PointingHandCursor)
-        # self.login_btn.connect(self.login)
 
-        # self.label3 = QLabel(self)
         # # self.label3.setText("Edrak")
         # self.label3.move(95, 55)
         # self.label3.setFont(QFont("Protest Riot", 18))
         # self.label3.setStyleSheet("color: black; font: Italic")
+        self.login_btn.clicked.connect(self.login)
 
-    # def login():
-    #     win = MainWindow()
-    #     win.show()
+    def login(self):
+        username = self.username_textbox.text()
+        password = self.password_textbox.text()
+        with open("users.csv", "r") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if username == row[0] and password == row[1]:
+                    self.hide()  # Hide the login window
+                    main_window = MainWindow()  # Create an instance of the main window
+                    main_window.show()
+                    break
+            else:
+                self.errorDialog()
+
+    def errorDialog(self):
+        dialog = QDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Error")
+        dialog.resize(300, 200)
+        dialog.setStyleSheet("background-color:#5558AC;")
+
+        label = QLabel(self)
+        label.setText("Password or Username is wrong!")
+        label.setGeometry(0, 0, 300, 200)
+        label.setFont(QFont("Protest Riot", 14))
+        label.setStyleSheet(
+            "color:black;background:#F9F8FD;margin:10px;padding:15px;border-radius:15px"
+        )
+
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        dialog.setLayout(layout)
+        dialog.exec()
+        dialog.show()
 
 
 app = QApplication(sys.argv)

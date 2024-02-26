@@ -30,7 +30,9 @@ class Admin(QWidget):
     def UiComponents(self):
         self.title = QLabel("Admins", self)
         self.title.setFont(QFont("Protest Riot", 25))
-        self.title.setStyleSheet(" color: rgba(63,71,105)")
+        self.title.setStyleSheet(
+            " color: rgba(63,71,105);background-color: transparent"
+        )
         self.title.setGeometry(40, 40, 300, 100)
 
         self.searchBox = QLineEdit(self)
@@ -239,6 +241,13 @@ class Admin(QWidget):
         # print(len(students_data))
         print(courses_std)
         print(len(courses_std))
+
+    def export_to_csv(self):
+        file_path = "for_export.csv"
+        list = [1, 2, 3, 4, 5, 6, 7, 6]
+        with open(file_path, "a", newline="") as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(list)
 
     # def process_file(self, file_path):
     #     rows = []
