@@ -138,7 +138,7 @@ class login_window(QMainWindow):
         with open("users.csv", "r") as file:
             reader = csv.reader(file)
             for row in reader:
-                if username == row[0] and password == row[1]:
+                if username == row[2] and password == row[3]:
                     self.hide()  # Hide the login window
                     main_window = MainWindow()  # Create an instance of the main window
                     main_window.show()

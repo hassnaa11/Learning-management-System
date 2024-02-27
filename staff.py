@@ -221,17 +221,17 @@ class staff(QMainWindow):
         #     # self.UiComponents()
         #     # self.show()
 
-    def update_table(self, data_staff):
-        print("inside update table")
-        self.tableWidget.setRowCount(len(data_staff))
-        row = 0
-        for id in data_staff:
-            print("inside the table")
-            self.tableWidget.setItem(row, 0, QTableWidgetItem(data_staff[id].iid))
-            self.tableWidget.setItem(row, 1, QTableWidgetItem(data_staff[id].name))
-            self.tableWidget.setItem(row, 2, QTableWidgetItem(data_staff[id].grade))
-            row += 1
-            print("id", id)
+    # def update_table(self, data_staff):
+    #     print("inside update table")
+    #     self.tableWidget.setRowCount(len(data_staff))
+    #     row = 0
+    #     for id in data_staff:
+    #         print("inside the table")
+    #         self.tableWidget.setItem(row, 0, QTableWidgetItem(data_staff[id].iid))
+    #         self.tableWidget.setItem(row, 1, QTableWidgetItem(data_staff[id].name))
+    #         self.tableWidget.setItem(row, 2, QTableWidgetItem(data_staff[id].grade))
+    #         row += 1
+    #         print("id", id)
 
     # def update_tabel(self, data):
     #     # self.hide()
@@ -268,6 +268,6 @@ class staff(QMainWindow):
             self.tableWidget.setRowHidden(row, not match_found)
 
     def open_add_staff_window(self):
-        self.update_table(data_staff)
-        self.add_staff_window = AddStaff()
+        # self.update_table(data_staff)
+        self.add_staff_window = AddStaff(self.tableWidget)
         self.add_staff_window.show()

@@ -12,6 +12,7 @@ from admin import Admin
 from add_student import AddStudent
 
 from add_student import data_std
+from studentprofile import StudentData
 
 
 class Students(QWidget):
@@ -197,19 +198,25 @@ class Students(QWidget):
         shadow.setOffset(0, 0)
         shadow.setColor(QColor("#BD80C5"))
         self.tableWidget.setGraphicsEffect(shadow)
+        self.tableWidget.cellClicked.connect(self.show_data)
 
-    def update_table(self, data_std):
-        print("inside update table")
-        self.tableWidget.setRowCount(len(data_std))
-        row = 0
-        for id in data_std:
-            print("inside the table")
-            self.tableWidget.setItem(row, 0, QTableWidgetItem(data_std[id].iid))
-            self.tableWidget.setItem(row, 1, QTableWidgetItem(data_std[id].name))
-            self.tableWidget.setItem(row, 2, QTableWidgetItem(data_std[id].grade))
-            self.tableWidget.setItem(row, 3, QTableWidgetItem(data_std[id].department))
-            row += 1
-            print("id", id)
+    # def update_table(self, data_std):
+    #     print("inside update table")
+    #     self.tableWidget.setRowCount(len(data_std))
+    #     row = 0
+    #     for id in data_std:
+    #         print("inside the table")
+    #         self.tableWidget.setItem(row, 0, QTableWidgetItem(data_std[id].iid))
+    #         self.tableWidget.setItem(row, 1, QTableWidgetItem(data_std[id].name))
+    #         self.tableWidget.setItem(row, 2, QTableWidgetItem(data_std[id].grade))
+    #         self.tableWidget.setItem(row, 3, QTableWidgetItem(data_std[id].department))
+    #         row += 1
+    #         print("id", id)
+
+    def show_data(self, row):
+        student_id = self.tableWidget.item(row, 0).text()
+        self.profile_student_window = StudentData(student_id)
+        self.profile_student_window.show()
 
     def filter_table(self):
         search_text = self.searchBox.text().strip().lower()
@@ -228,13 +235,6 @@ class Students(QWidget):
             self.tableWidget.setRowHidden(row, not match_found)
 
     def open_add_student_window(self):
-        self.update_table(data_std)
-        self.add_student_window = AddStudent()
+        # self.update_table(data_std)
+        self.add_student_window = AddStudent(self.tableWidget)
         self.add_student_window.show()
-
-
-# def go_to_anotherWindow(self):
-
-# self.addstudent = AddStudent()
-# self.addstudent.show()
-# self.hide()

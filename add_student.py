@@ -22,8 +22,9 @@ data_std = {}
 
 
 class AddStudent(QMainWindow):
-    def __init__(self):
+    def __init__(self, table):
         super().__init__()
+        self.tableWidget = table
         self.data_std = data_std
         self.setGeometry(200, 20, 1200, 1000)
         self.setWindowTitle("Add New Student")
@@ -225,8 +226,9 @@ class AddStudent(QMainWindow):
             iid, name, age, grade, number, email, department, year, checked, []
         )
         # Students.update_table(Students, data_std)
+        self.update_table(data_std)
 
-        print("data: ", data_std[iid].name)
+        print("data: ", data_std)
 
         # Append new data to the existing data
         # new_data = pd.DataFrame(
@@ -250,6 +252,19 @@ class AddStudent(QMainWindow):
         # self.existing_data.to_excel(self.data_file, index=False)
 
         self.close()
+
+    def update_table(self, data_std):
+        print("inside update table")
+        self.tableWidget.setRowCount(len(data_std))
+        row = 0
+        for id in data_std:
+            print("inside the table")
+            self.tableWidget.setItem(row, 0, QTableWidgetItem(data_std[id].iid))
+            self.tableWidget.setItem(row, 1, QTableWidgetItem(data_std[id].name))
+            self.tableWidget.setItem(row, 2, QTableWidgetItem(data_std[id].grade))
+            self.tableWidget.setItem(row, 3, QTableWidgetItem(data_std[id].department))
+            row += 1
+            print("id", id)
 
     def clear_form(self):
         self.textbox1.clear()

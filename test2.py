@@ -121,6 +121,9 @@
 # print("Get all items")
 # ht.traverse()
 
-d = {"egypt": "cairo"}
-d["egypttt"] = "cairooo"
-print(d)
+# d = {"egypt": "cairo"}
+# d["egypttt"] = "cairooo"
+# print(d)
+t = (5, 6)
+
+# print(t[0] == 5)

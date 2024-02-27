@@ -1114,8 +1114,7 @@ class AddNewPersontoCourseDetails(QMainWindow):
                 course_name = "Fluids & Thermo Dynamics"
 
         if self.checked == "student":
-            if id in data_std:
-                print("hweeee:: ", self.course_code)
+            if id in data_std and data_std[id].name == name:
                 if (name, grade) not in self.mycourses_list[ind]:
                     data_std[id].courses.append((course_name, grade))
                     self.mycourses_list[ind].append((name, grade))
@@ -1129,7 +1128,11 @@ class AddNewPersontoCourseDetails(QMainWindow):
                 self.errorDialog(f"The {self.checked} doesn't exist!")
 
         else:
-            if id in data_staff:
+            if (
+                id in data_staff
+                and data_staff[id].name == name
+                and data_staff[id].grade == position
+            ):
                 if name not in self.staff_list[ind]:
                     data_staff[id].courses.append(course_name)
                     self.staff_list[ind].append(name)

@@ -139,19 +139,31 @@ class Admin(QWidget):
         self.tableWidget = QTableWidget(self)
         self.tableWidget.setRowCount(5)
         self.tableWidget.setColumnCount(3)
-        self.tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
-        self.tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
-        self.tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        self.tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
-        self.tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        self.tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
-        self.tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        self.tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
 
-        self.tableWidget.setItem(0, 2, QTableWidgetItem("shahdd"))
-        self.tableWidget.setItem(1, 2, QTableWidgetItem("hasnaa4"))
-        self.tableWidget.setItem(2, 2, QTableWidgetItem("Ayatt"))
-        self.tableWidget.setItem(3, 2, QTableWidgetItem("Eman304"))
+        with open("users.csv", "r") as file:
+            reader = csv.reader(file)
+            i = 0
+            for row in reader:
+                j = 0
+                for col in row:
+                    if j <= 2:
+                        self.tableWidget.setItem(i, j, QTableWidgetItem(col))
+                        j += 1
+                i += 1
+
+        # self.tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
+        # self.tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
+        # self.tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
+        # self.tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
+        # self.tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
+        # self.tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
+        # self.tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
+        # self.tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
+
+        # self.tableWidget.setItem(0, 2, QTableWidgetItem("shahdd"))
+        # self.tableWidget.setItem(1, 2, QTableWidgetItem("hasnaa4"))
+        # self.tableWidget.setItem(2, 2, QTableWidgetItem("Ayatt"))
+        # self.tableWidget.setItem(3, 2, QTableWidgetItem("Eman304"))
 
         self.tableWidget.setFont(QFont("Times", 12))
         self.tableWidget.horizontalHeader().setVisible(False)
