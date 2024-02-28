@@ -54,51 +54,51 @@ class Students(QWidget):
         statisticWordLabel.setGeometry(1250, 40, 400, 60)
         statisticWordLabel.setBold = True
 
-        # the two buttons label above
-        btLabel = QLabel(self)
-        btLabel.setStyleSheet("border-radius : 10px; background-color: #B67ADC;")
-        btLabel.setGeometry(900, 130, 105, 40)
+        # # the two buttons label above
+        # btLabel = QLabel(self)
+        # btLabel.setStyleSheet("border-radius : 10px; background-color: #B67ADC;")
+        # btLabel.setGeometry(900, 130, 105, 40)
 
-        self.filter = QPushButton(self)
-        self.filter.setFont(QFont("Protest Riot", 15))
-        self.filter.resize(32, 32)
-        self.filter.move(915, 135)
-        self.filter.setStyleSheet(
-            " QPushButton::hover"
-            "{"
-            "background-color : #50336D;"
-            "};border-radius : 10px;background-color:#7A51A1 ;color:white; bold"
-        )
-        self.filter.setCursor(Qt.PointingHandCursor)
-        self.icon = QIcon(
-            "icons8-filter-50.jpg"
-        )  # Replace 'icon.png' with the path to your icon file
-        self.filter.setIcon(self.icon)
-        # self.filter.clicked(self.go_to_anotherWindow())
+        # self.filter = QPushButton(self)
+        # self.filter.setFont(QFont("Protest Riot", 15))
+        # self.filter.resize(32, 32)
+        # self.filter.move(915, 135)
+        # self.filter.setStyleSheet(
+        #     " QPushButton::hover"
+        #     "{"
+        #     "background-color : #50336D;"
+        #     "};border-radius : 10px;background-color:#7A51A1 ;color:white; bold"
+        # )
+        # self.filter.setCursor(Qt.PointingHandCursor)
+        # self.icon = QIcon(
+        #     "icons8-filter-50.jpg"
+        # )  # Replace 'icon.png' with the path to your icon file
+        # self.filter.setIcon(self.icon)
+        # # self.filter.clicked(self.go_to_anotherWindow())
 
-        self.list = QPushButton(self)
-        self.list.setFont(QFont("Protest Riot", 15))
-        self.list.resize(32, 32)
-        self.list.move(960, 135)
-        self.list.setStyleSheet(
-            "border-radius : 10px;background-color: #7A51A1 ;color:white; bold"
-        )
-        self.list.setCursor(Qt.PointingHandCursor)
-        self.icon = QIcon(
-            "icons8-list-30.jpg"
-        )  # Replace 'icon.png' with the path to your icon file
-        self.list.setIcon(self.icon)
+        # self.list = QPushButton(self)
+        # self.list.setFont(QFont("Protest Riot", 15))
+        # self.list.resize(32, 32)
+        # self.list.move(960, 135)
+        # self.list.setStyleSheet(
+        #     "border-radius : 10px;background-color: #7A51A1 ;color:white; bold"
+        # )
+        # self.list.setCursor(Qt.PointingHandCursor)
+        # self.icon = QIcon(
+        #     "icons8-list-30.jpg"
+        # )  # Replace 'icon.png' with the path to your icon file
+        # self.list.setIcon(self.icon)
 
         # add student button
         self.addStudent = QPushButton(self)
         self.addStudent.setText("Add Student")
         self.addStudent.setFont(QFont("Exo2", 11))
-        self.addStudent.setGeometry(750, 130, 120, 40)
+        self.addStudent.setGeometry(910, 130, 120, 40)
         self.addStudent.setStyleSheet(
             " QPushButton::hover"
             "{"
-            "background-color : #7A51A1;"
-            "};border-radius : 10px; background-color: #B67ADC; color: white;"
+            "background-color : #393984;"
+            "};border-radius : 10px; background-color: #5558AC; color: white;"
         )
         self.addStudent.setCursor(Qt.PointingHandCursor)
         self.addStudent.clicked.connect(self.open_add_student_window)

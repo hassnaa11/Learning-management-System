@@ -163,7 +163,6 @@ class Courses(QWidget):
         shadow.setOffset(0, 0)
         shadow.setColor(QColor("#BD80C5"))
         self.add_btn.setGraphicsEffect(shadow)
-        # self.add_btn.clicked.connect(self.addNewPersontoCourse)
 
         # view course button
         view_btn = QPushButton(self)

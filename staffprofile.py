@@ -13,26 +13,24 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
-from add_student import data_std
+from add_staff import data_staff
 
 
-class StudentData(QDialog):
-    def __init__(self, student_id):
+class StaffData(QDialog):
+    def __init__(self, staff_id):
         super().__init__()
         self.setGeometry(600, 70, 800, 880)
-        self.setWindowTitle("Student Profile")
-        self.student_id = student_id
-        self.UiComponents(student_id)
+        self.setWindowTitle("Staff Profile")
+        self.staff_id = staff_id
+        self.UiComponents(staff_id)
 
-    def UiComponents(self, student_id):
-        self.student_id = student_id
-        # QFontDatabase.addApplicationFont("./ProtestRiot-Regular.ttf")
+    def UiComponents(self, staff_id):
+        self.staff_id = staff_id
         p = QPalette()
         gradient = QLinearGradient(0, 0, 200, 800)
         gradient.setColorAt(0.25, QColor(234, 218, 222))
         gradient.setColorAt(0.5, QColor(200, 186, 211))
         gradient.setColorAt(0.75, QColor(166, 149, 183))
-        # gradient.setColorAt(0.75, QColor(178, 214, 205))
         gradient.setColorAt(1.0, QColor(122, 135, 184))
 
         p.setBrush(QPalette.Window, QBrush(gradient))
@@ -42,7 +40,6 @@ class StudentData(QDialog):
         self.label.setStyleSheet(
             "border-radius : 80px; background-color: rgba(255, 255, 255,0.3);"
         )
-        # self.label.move(510, 165)
         self.label.move(175, 180)
         self.label.resize(515, 655)
         shadow = QGraphicsDropShadowEffect()
@@ -63,17 +60,16 @@ class StudentData(QDialog):
         self.textbox2 = QLabel(self)
         self.textbox2.move(285, 245)
         self.textbox2.resize(300, 50)
-        self.textbox2.setText(data_std[student_id].name)
+        self.textbox2.setText(data_staff[staff_id].name)
         self.textbox2.setFont(QFont("Protest Riot", 12))
         self.textbox2.setStyleSheet(
             "border-radius : 25px;background-color: rgba(255,255,255,0.7) ; padding-left:30px"
         )
-        # self.textbox2.setEchoMode(QtWidgets.QLineEdit.Password)
 
         self.ageBox = QLabel(self)
         self.ageBox.move(285, 325)
         self.ageBox.resize(145, 50)
-        self.ageBox.setText(data_std[student_id].age)
+        self.ageBox.setText(data_staff[staff_id].age)
         self.ageBox.setFont(QFont("Protest Riot", 12))
         self.ageBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
@@ -82,7 +78,7 @@ class StudentData(QDialog):
         self.modBox = QLabel(self)
         self.modBox.move(285, 405)
         self.modBox.resize(300, 50)
-        self.modBox.setText(data_std[student_id].number)
+        self.modBox.setText(data_staff[staff_id].number)
         self.modBox.setFont(QFont("Protest Riot", 12))
         self.modBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
@@ -91,7 +87,7 @@ class StudentData(QDialog):
         self.mailBox = QLabel(self)
         self.mailBox.move(285, 485)
         self.mailBox.resize(300, 50)
-        self.mailBox.setText(data_std[student_id].email)
+        self.mailBox.setText(data_staff[staff_id].email)
         self.mailBox.setFont(QFont("Protest Riot", 12))
         self.mailBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
@@ -100,7 +96,7 @@ class StudentData(QDialog):
         self.gradeBox = QLabel(self)
         self.gradeBox.move(440, 325)
         self.gradeBox.resize(145, 50)
-        self.gradeBox.setText(data_std[student_id].iid)
+        self.gradeBox.setText(data_staff[staff_id].iid)
         self.gradeBox.setFont(QFont("Protest Riot", 12))
         self.gradeBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
@@ -109,12 +105,11 @@ class StudentData(QDialog):
         self.DepBox = QLabel(self)
         self.DepBox.move(285, 565)
         self.DepBox.resize(300, 50)
-        self.DepBox.setText(data_std[student_id].department)
+        self.DepBox.setText(data_staff[staff_id].department)
         self.DepBox.setFont(QFont("Protest Riot", 12))
         self.DepBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
         )
-
         self.coursesLabel = QLabel(self)
         self.coursesLabel.move(300, 645)
         self.coursesLabel.resize(150, 50)
@@ -123,7 +118,7 @@ class StudentData(QDialog):
         self.coursesLabel.setStyleSheet("color: rgba(63,71,105)")
 
         self.tableWidget = QTableWidget(self)
-        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setColumnCount(1)
         self.tableWidget.move(285, 645)
         self.tableWidget.setFont(QFont("Protest Riot", 12))
         self.tableWidget.horizontalHeader().setVisible(False)
@@ -133,25 +128,21 @@ class StudentData(QDialog):
         self.tableWidget.setStyleSheet(
             "QTableWidget { border-radius : 25px ; background-color: rgba(255,255,255,0.7);padding-left:10px;padding-top:28px;selection-background-color: #EDE1F7; selection-color: black}"
         )
-
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.update_table(data_staff, staff_id)
 
-        self.update_table(data_std, student_id)
-
-    def update_table(self, data_std, student_id):
+    def update_table(self, data_staff, staff_id):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
         print("inside update table profile))))")
-        # self.tableWidget.setRowCount(len(data_std[student_id].courses))
-        print("length: ", len(data_std[student_id].courses))
-        length = len(data_std[student_id].courses)
-        # self.tableWidget.setItem(0, 0, QTableWidgetItem("Courses"))
+        # self.tableWidget.setRowCount(len(data_staff[staff_id].courses))
+        print("length: ", len(data_staff[staff_id].courses))
+        length = len(data_staff[staff_id].courses)
         row = 0
-        if data_std[student_id].courses != []:
+        if data_staff[staff_id].courses != []:
             self.tableWidget.setRowCount(length)
             print("true cond")
-            for i in data_std[student_id].courses:
-                self.tableWidget.setItem(row, 0, QTableWidgetItem(i[0]))
-                self.tableWidget.setItem(row, 1, QTableWidgetItem(i[1]))
+            for i in data_staff[staff_id].courses:
+                self.tableWidget.setItem(row, 0, QTableWidgetItem(i))
                 row += 1
