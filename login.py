@@ -10,11 +10,10 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore
+import csv
 import sys
 from main import MainWindow
-import csv
-
-# from main import MainWindow, ClickableLabel
+from courses import Courses
 
 
 class login_window(QMainWindow):
@@ -125,11 +124,6 @@ class login_window(QMainWindow):
             "}; border-radius : 25px;background-color: rgba(63,71,105) ;color:white"
         )
         self.login_btn.setCursor(Qt.PointingHandCursor)
-
-        # # self.label3.setText("Edrak")
-        # self.label3.move(95, 55)
-        # self.label3.setFont(QFont("Protest Riot", 18))
-        # self.label3.setStyleSheet("color: black; font: Italic")
         self.login_btn.clicked.connect(self.login)
 
     def login(self):
@@ -140,7 +134,9 @@ class login_window(QMainWindow):
             for row in reader:
                 if username == row[2] and password == row[3]:
                     self.hide()  # Hide the login window
-                    main_window = MainWindow()  # Create an instance of the main window
+                    main_window = MainWindow(
+                        row[1]
+                    )  # Create an instance of the main window
                     main_window.show()
                     break
             else:

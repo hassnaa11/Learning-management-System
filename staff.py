@@ -1,17 +1,9 @@
-import PyQt5
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-import sys
-
-# importing libraries
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
-
 from PyQt5.uic.properties import QtCore
-import csv
-import math
 from add_staff import AddStaff
 from add_staff import data_staff
 from staffprofile import StaffData
@@ -20,13 +12,9 @@ from staffprofile import StaffData
 class staff(QMainWindow):
     def __init__(self):
         super().__init__()
-        # self.data = []
         self.UiComponents()
-
         self.setWindowTitle("Students ")
-
         self.setStyleSheet("background-color: #F9F8FD;")
-        # self.show()
 
     def UiComponents(self):
         pinkLabel2 = QLabel(self)
@@ -52,41 +40,6 @@ class staff(QMainWindow):
         )
         statisticWordLabel.setGeometry(1250, 40, 400, 60)
         statisticWordLabel.setBold = True
-
-        # # the two buttons label above
-        # btLabel = QLabel(self)
-        # btLabel.setStyleSheet("border-radius : 10px; background-color: #B67ADC;")
-        # btLabel.setGeometry(900, 130, 105, 40)
-
-        # self.filter = QPushButton(self)
-        # self.filter.setFont(QFont("Protest Riot", 15))
-        # self.filter.resize(32, 32)
-        # self.filter.move(915, 135)
-        # self.filter.setStyleSheet(
-        #     " QPushButton::hover"
-        #     "{"
-        #     "background-color : #50336D;"
-        #     "};border-radius : 10px;background-color:#7A51A1 ;color:white; bold"
-        # )
-        # self.filter.setCursor(Qt.PointingHandCursor)
-        # self.icon = QIcon(
-        #     "icons8-filter-50.jpg"
-        # )  # Replace 'icon.png' with the path to your icon file
-        # self.filter.setIcon(self.icon)
-        # # self.filter.clicked(self.go_to_anotherWindow())
-
-        # self.list = QPushButton(self)
-        # self.list.setFont(QFont("Protest Riot", 15))
-        # self.list.resize(32, 32)
-        # self.list.move(960, 135)
-        # self.list.setStyleSheet(
-        #     "border-radius : 10px;background-color: #7A51A1 ;color:white; bold"
-        # )
-        # self.list.setCursor(Qt.PointingHandCursor)
-        # self.icon = QIcon(
-        #     "icons8-list-30.jpg"
-        # )  # Replace 'icon.png' with the path to your icon file
-        # self.list.setIcon(self.icon)
 
         # add student button
         self.addStaff = QPushButton(self)
@@ -146,7 +99,6 @@ class staff(QMainWindow):
         headertabel.setGraphicsEffect(shadow)
 
         self.tableWidget = QTableWidget(self)
-        # self.tableWidget.setRowCount(5)
         self.tableWidget.setColumnCount(3)
 
         # a = Admin()
@@ -159,20 +111,6 @@ class staff(QMainWindow):
         #     for col in range(3):
         #         tableWidget.setItem(row, col, QTableWidgetItem(a.data[i]))
         #         i += 1
-
-        # tableWidget.setItem(0, 0, QTableWidgetItem(a.data[3]))
-        # tableWidget.setItem(0, 1, QTableWidgetItem("Eman Mazraban"))
-        # tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        # tableWidget.setItem(1, 1, QTableWidgetItem("Mohamed Islam"))
-        # tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        # tableWidget.setItem(2, 1, QTableWidgetItem("peter Emad"))
-        # tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        # tableWidget.setItem(3, 1, QTableWidgetItem("Mohamed mostafa"))
-
-        # tableWidget.setItem(0, 2, QTableWidgetItem("Professor"))
-        # tableWidget.setItem(1, 2, QTableWidgetItem("Professor"))
-        # tableWidget.setItem(2, 2, QTableWidgetItem("Teaching Assistant"))
-        # tableWidget.setItem(3, 2, QTableWidgetItem("Teaching Assistant"))
 
         self.tableWidget.resizeColumnToContents(10)
         self.tableWidget.resizeColumnToContents(5)

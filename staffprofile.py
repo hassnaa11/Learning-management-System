@@ -1,18 +1,11 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
-    QWidget,
-    QPushButton,
-    QLineEdit,
-    QInputDialog,
-    QApplication,
     QLabel,
 )
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
 from add_staff import data_staff
 
 
@@ -110,12 +103,6 @@ class StaffData(QDialog):
         self.DepBox.setStyleSheet(
             "border-radius : 25px ; background-color: rgba(255,255,255,0.7); padding-left:30px"
         )
-        self.coursesLabel = QLabel(self)
-        self.coursesLabel.move(300, 645)
-        self.coursesLabel.resize(150, 50)
-        self.coursesLabel.setText("Courses")
-        self.coursesLabel.setFont(QFont("Protest Riot", 12))
-        self.coursesLabel.setStyleSheet("color: rgba(63,71,105)")
 
         self.tableWidget = QTableWidget(self)
         self.tableWidget.setColumnCount(1)
@@ -126,23 +113,21 @@ class StaffData(QDialog):
         self.tableWidget.setShowGrid(False)
         self.tableWidget.resize(300, 170)
         self.tableWidget.setStyleSheet(
-            "QTableWidget { border-radius : 25px ; background-color: rgba(255,255,255,0.7);padding-left:10px;padding-top:28px;selection-background-color: #EDE1F7; selection-color: black}"
+            "QTableWidget { border-radius : 25px ; background-color: rgba(255,255,255,0.7);padding-left:10px;padding-top:7px;selection-background-color: #EDE1F7; selection-color: black}"
         )
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setRowCount(1)
+        self.tableWidget.setItem(0, 0, QTableWidgetItem("Courses:"))
         self.update_table(data_staff, staff_id)
 
     def update_table(self, data_staff, staff_id):
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
-        print("inside update table profile))))")
-        # self.tableWidget.setRowCount(len(data_staff[staff_id].courses))
-        print("length: ", len(data_staff[staff_id].courses))
         length = len(data_staff[staff_id].courses)
         row = 0
         if data_staff[staff_id].courses != []:
             self.tableWidget.setRowCount(length)
-            print("true cond")
             for i in data_staff[staff_id].courses:
                 self.tableWidget.setItem(row, 0, QTableWidgetItem(i))
                 row += 1

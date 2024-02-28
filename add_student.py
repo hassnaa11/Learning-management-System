@@ -1,21 +1,15 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
-    QWidget,
     QPushButton,
     QLineEdit,
-    QInputDialog,
-    QApplication,
     QLabel,
 )
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from data import Data
 import re
-
-# from students import Students
 
 data_std = {}
 
@@ -28,15 +22,8 @@ class AddStudent(QMainWindow):
         self.setGeometry(500, 100, 950, 700)
         self.setWindowTitle("Add New Student")
         self.UiComponents()
-        # self.show()
-        # self.data_file = "data.xlsx"
-        # try:
-        #     self.existing_data = pd.read_excel(self.data_file)
-        # except FileNotFoundError:
-        #     self.existing_data = pd.DataFrame()
 
     def UiComponents(self):
-        # QFontDatabase.addApplicationFont("./ProtestRiot-Regular.ttf")
         p = QPalette()
         gradient = QLinearGradient(0, 0, 200, 800)
         gradient.setColorAt(0.25, QColor(234, 218, 222))
@@ -154,7 +141,10 @@ class AddStudent(QMainWindow):
         self.btn.resize(200, 50)
         self.btn.move(350, 595)
         self.btn.setStyleSheet(
-            "border-radius : 25px;background-color: rgba(63,71,105) ;color:white; bold"
+            " QPushButton::hover"
+            "{"
+            "background-color : #212442;"
+            "};background-color: rgba(63,71,105); border-radius : 15px;  color:black;margin-bottom:5px;color:white  "
         )
         self.btn.setCursor(Qt.PointingHandCursor)
         self.btn.clicked.connect(self.submit_data)
@@ -164,7 +154,10 @@ class AddStudent(QMainWindow):
         self.rbtn.resize(50, 50)
         self.rbtn.move(560, 596)
         self.rbtn.setStyleSheet(
-            "border-radius : 25px;background-color: rgba(63,71,105) ;color:white; bold"
+            " QPushButton::hover"
+            "{"
+            "background-color : #212442;"
+            "};background-color: rgba(63,71,105); border-radius : 25px;"
         )
         self.rbtn.setCursor(Qt.PointingHandCursor)
         self.icon = QIcon(
@@ -295,31 +288,6 @@ class AddStudent(QMainWindow):
             iid, name, age, grade, number, email, department, year, checked, []
         )
         self.update_table(data_std)
-        # Students.update_table(Students, data_std)
-
-        # print("data: ", data_std[iid].name)
-
-        # Append new data to the existing data
-        # new_data = pd.DataFrame(
-        #     {
-        #         "Name": [name],
-        #         "Age": [age],
-        #         "Grade": [grade],
-        #         "Phone Number": [number],
-        #         "Email": [email],
-        #         "Department": [department],
-        #         "ID": [iid],
-        #         "Year": [year],
-        #         "Gender": [checked],
-        #     }
-        # )
-        # self.existing_data = pd.concat(
-        #     [self.existing_data, new_data], ignore_index=True
-        # )
-
-        # Save the combined data to the Excel file
-        # self.existing_data.to_excel(self.data_file, index=False)
-
         self.close()
 
     def update_table(self, data_std):
@@ -348,21 +316,10 @@ class AddStudent(QMainWindow):
         self.femalebox.setChecked(False)
 
     def uncheck(self, state):
-
-        # checking if state is checked
         if state == Qt.Checked:
-
-            # if first check box is selected
             if self.sender() == self.femalebox:
-
-                # making other check box to uncheck
                 self.malebox.setChecked(False)
-            # self.checkBoxB.setChecked(False)
-
-            # if second check box is selected
             elif self.sender() == self.malebox:
-
-                # making other check box to uncheck
                 self.femalebox.setChecked(False)
 
     def show_error_message(self, message):

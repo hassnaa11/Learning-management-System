@@ -1,17 +1,12 @@
-import PyQt5
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-import sys
 import csv
-
-# importing libraries
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5.QtCore import pyqtSignal
-
 from math import inf
-from staff import staff
+from add_staff import data_staff
+from add_student import data_std
 
 data = []
 students_data = []
@@ -33,14 +28,12 @@ class Admin(QWidget):
         self.title.setStyleSheet(
             " color: rgba(63,71,105);background-color: transparent"
         )
-        self.title.setGeometry(40, 40, 300, 100)
+        self.title.setGeometry(320, 40, 300, 100)
 
         self.searchBox = QLineEdit(self)
         self.searchBox.setPlaceholderText("Search")
         self.searchBox.setFont(QFont("Arial", 12))
-        self.searchBox.setGeometry(
-            600, 75, 280, 40
-        )  # Set the geometry for the search box
+        self.searchBox.setGeometry(910, 75, 280, 40)
         self.searchBox.setStyleSheet(
             "border-radius : 10px; background-color: #EDE1F7; color: black; padding-left: 55px ; padding-right:30px ;font-size: 15px"
         )
@@ -50,13 +43,13 @@ class Admin(QWidget):
         search_label = QLabel(self)
         pixmap = QPixmap("images/icons8-search-30.png")
         search_label.setPixmap(pixmap)
-        search_label.move(620, 78)
+        search_label.move(925, 78)
         search_label.resize(30, 30)
         search_label.setStyleSheet("background-color: transparent;")
 
         box = QLabel(self)
 
-        box.setGeometry(30, 250, 870, 300)
+        box.setGeometry(320, 200, 870, 300)
         box.setStyleSheet("background-color:#F4F4FE; border-radius : 15px;")
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(10)
@@ -112,6 +105,7 @@ class Admin(QWidget):
         self.importing_csv.setFont(QFont("Arial", 15))
         self.exporting_csv.setFont(QFont("Arial", 15))
         self.importing_csv.clicked.connect(self.open_file_dialog)
+        self.exporting_csv.clicked.connect(self.export_to_csv)
 
         headertabel = QTableWidget(self)
         headertabel.setColumnCount(3)
@@ -121,7 +115,7 @@ class Admin(QWidget):
         headertabel.setItem(0, 2, QTableWidgetItem("Admin Username"))
 
         headertabel.setFont(QFont("Times", 14))
-        headertabel.setGeometry(30, 630, 870, 50)
+        headertabel.setGeometry(320, 570, 870, 50)
 
         headertabel.setStyleSheet(
             "QTableWidget { border: 0px; color:black  ; background-color:#F4F4FE  ; border-radius : 15px;padding-left:20px;padding-top:7px;selection-background-color: #EDE1F7; selection-color: black}"
@@ -137,13 +131,15 @@ class Admin(QWidget):
         headertabel.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.tableWidget = QTableWidget(self)
-        self.tableWidget.setRowCount(5)
         self.tableWidget.setColumnCount(3)
 
         with open("users.csv", "r") as file:
             reader = csv.reader(file)
             i = 0
+            rows_num = 1
             for row in reader:
+                rows_num += 1
+                self.tableWidget.setRowCount(rows_num)
                 j = 0
                 for col in row:
                     if j <= 2:
@@ -171,7 +167,7 @@ class Admin(QWidget):
         self.tableWidget.setShowGrid(False)
 
         # Table will fit the screen horizontally
-        self.tableWidget.setGeometry(30, 700, 870, 200)
+        self.tableWidget.setGeometry(320, 640, 870, 260)
         self.tableWidget.setStyleSheet(
             "QTableWidget { border: 0px; background-color:#F4F4FE; color: black ; border-radius : 15px;padding-left:20px;padding-top:7px;selection-background-color: #EDE1F7; selection-color: black}"
         )
@@ -255,20 +251,35 @@ class Admin(QWidget):
         print(len(courses_std))
 
     def export_to_csv(self):
-        file_path = "for_export.csv"
-        list = [1, 2, 3, 4, 5, 6, 7, 6]
+        file_path = "For_export.csv"
+
         with open(file_path, "a", newline="") as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(list)
 
-    # def process_file(self, file_path):
-    #     rows = []
-    #     with open(file_path, "r") as file:
-    #         reader = csv.reader(file)
-    #         row_ind = 0
-    #         for row in reader:
-    #             col_ind = 0
-    #             for col in row:
-    #                 print(row)
-
-    #     return file_path
+            # Write data for each student
+            for student in data_std.values():
+                writer.writerow(
+                    [
+                        student.iid,
+                        student.name,
+                        student.age,
+                        student.grade,
+                        student.number,
+                        student.email,
+                        student.department,
+                        student.year,
+                        student.checked,
+                    ]
+                )
+            for staff in data_staff.values():
+                writer.writerow(
+                    [
+                        staff.iid,
+                        staff.name,
+                        staff.age,
+                        staff.number,
+                        staff.email,
+                        staff.department,
+                        staff.checked,
+                    ]
+                )

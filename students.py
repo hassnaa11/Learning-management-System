@@ -1,16 +1,12 @@
-import PyQt5
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-import sys
-import csv
-
-# importing libraries
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from admin import Admin
-from add_student import AddStudent
 
+# import pyqtgraph as pg
+from PyQt5 import QtGui
+from add_student import AddStudent
 from add_student import data_std
 from studentprofile import StudentData
 
@@ -19,17 +15,10 @@ class Students(QWidget):
     def __init__(self):
         super().__init__()
         self.UiComponents()
-
         self.setWindowTitle("Students ")
-
         self.setStyleSheet("background-color: #F9F8FD;")
 
     def UiComponents(self):
-        # for corners
-        # pinkLabel = QLabel(self)
-        # pinkLabel.setStyleSheet("border-radius : 50px; background-color: white;")
-        # pinkLabel.setGeometry(0, 8, 1200, 975)
-
         pinkLabel2 = QLabel(self)
         pinkLabel2.setStyleSheet("border-radius : 50px; background-color: #F4F4FE;")
         pinkLabel2.setGeometry(1100, 8, 550, 975)
@@ -53,41 +42,6 @@ class Students(QWidget):
         )
         statisticWordLabel.setGeometry(1250, 40, 400, 60)
         statisticWordLabel.setBold = True
-
-        # # the two buttons label above
-        # btLabel = QLabel(self)
-        # btLabel.setStyleSheet("border-radius : 10px; background-color: #B67ADC;")
-        # btLabel.setGeometry(900, 130, 105, 40)
-
-        # self.filter = QPushButton(self)
-        # self.filter.setFont(QFont("Protest Riot", 15))
-        # self.filter.resize(32, 32)
-        # self.filter.move(915, 135)
-        # self.filter.setStyleSheet(
-        #     " QPushButton::hover"
-        #     "{"
-        #     "background-color : #50336D;"
-        #     "};border-radius : 10px;background-color:#7A51A1 ;color:white; bold"
-        # )
-        # self.filter.setCursor(Qt.PointingHandCursor)
-        # self.icon = QIcon(
-        #     "icons8-filter-50.jpg"
-        # )  # Replace 'icon.png' with the path to your icon file
-        # self.filter.setIcon(self.icon)
-        # # self.filter.clicked(self.go_to_anotherWindow())
-
-        # self.list = QPushButton(self)
-        # self.list.setFont(QFont("Protest Riot", 15))
-        # self.list.resize(32, 32)
-        # self.list.move(960, 135)
-        # self.list.setStyleSheet(
-        #     "border-radius : 10px;background-color: #7A51A1 ;color:white; bold"
-        # )
-        # self.list.setCursor(Qt.PointingHandCursor)
-        # self.icon = QIcon(
-        #     "icons8-list-30.jpg"
-        # )  # Replace 'icon.png' with the path to your icon file
-        # self.list.setIcon(self.icon)
 
         # add student button
         self.addStudent = QPushButton(self)
@@ -161,26 +115,6 @@ class Students(QWidget):
         #         self.tableWidget.setItem(row, col, QTableWidgetItem(a.students_data[i]))
         #         i += 1
 
-        # tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
-        # tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
-        # tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        # tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
-        # tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        # tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
-        # tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        # tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
-
-        # tableWidget.setItem(0, 2, QTableWidgetItem("second"))
-        # tableWidget.setItem(1, 2, QTableWidgetItem("third"))
-        # tableWidget.setItem(2, 2, QTableWidgetItem("first"))
-        # tableWidget.setItem(3, 2, QTableWidgetItem("fourth"))
-        # tableWidget.setItem(0, 3, QTableWidgetItem("SBE"))
-        # tableWidget.setItem(2, 3, QTableWidgetItem("ARC"))
-        # tableWidget.setItem(1, 3, QTableWidgetItem("CMP"))
-        # tableWidget.setItem(3, 3, QTableWidgetItem("CVE"))
-        # self.tableWidget.resizeColumnToContents(10)
-        # self.tableWidget.resizeColumnToContents(5)
-
         self.tableWidget.setFont(QFont("Times", 12))
         self.tableWidget.horizontalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setVisible(False)
@@ -200,18 +134,31 @@ class Students(QWidget):
         self.tableWidget.setGraphicsEffect(shadow)
         self.tableWidget.cellClicked.connect(self.show_data)
 
-    # def update_table(self, data_std):
-    #     print("inside update table")
-    #     self.tableWidget.setRowCount(len(data_std))
-    #     row = 0
-    #     for id in data_std:
-    #         print("inside the table")
-    #         self.tableWidget.setItem(row, 0, QTableWidgetItem(data_std[id].iid))
-    #         self.tableWidget.setItem(row, 1, QTableWidgetItem(data_std[id].name))
-    #         self.tableWidget.setItem(row, 2, QTableWidgetItem(data_std[id].grade))
-    #         self.tableWidget.setItem(row, 3, QTableWidgetItem(data_std[id].department))
-    #         row += 1
-    #         print("id", id)
+        # Graph
+        # self.plot_widget = pg.PlotWidget(self)
+        # self.plot_widget.setLabel("left", " No.of students")
+        # self.plot_widget.setLabel("bottom", "year")
+        # axis = self.plot_widget.getAxis("bottom")
+        # self.plot_widget.move(1100, 300)  # Set the position
+        # self.plot_widget.resize(300, 300)
+        # axis.setTicks(
+        #     [[(1, "First"), (2, "Second"), (3, "Third"), (4, "fourth"), (5, "prep")]]
+        # )
+        # self.data = {"First": 1, "Second": 2, "Third": 3, "Fourth": 4, "Prep": 5}
+        # self.x_values = [1, 2, 3, 4, 5]
+        # self.plot_widget.setBackground(QtGui.QColor(100, 50, 254, 25))
+        # self.updatee = QPushButton(self)
+        # self.updatee.setText("update graph")
+        # self.updatee.setFont(QFont("Exo2", 11))
+        # self.updatee.setGeometry(1200, 630, 120, 40)
+        # self.updatee.setStyleSheet(
+        #     " QPushButton::hover"
+        #     "{"
+        #     "background-color : #7A51A1;"
+        #     "};border-radius : 10px; background-color: #B67ADC; color: white;"
+        # )
+        # self.updatee.setCursor(Qt.PointingHandCursor)
+        # self.updatee.clicked.connect(self.update_graph)
 
     def show_data(self, row):
         student_id = self.tableWidget.item(row, 0).text()
@@ -235,6 +182,5 @@ class Students(QWidget):
             self.tableWidget.setRowHidden(row, not match_found)
 
     def open_add_student_window(self):
-        # self.update_table(data_std)
         self.add_student_window = AddStudent(self.tableWidget)
         self.add_student_window.show()

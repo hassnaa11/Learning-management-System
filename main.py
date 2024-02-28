@@ -1,10 +1,5 @@
-import PyQt5
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 import sys
-import csv
-
-# importing libraries
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -26,8 +21,9 @@ class ClickableLabel(QLabel):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
+        self.username = username
         QFontDatabase.addApplicationFont("fonts\ProtestRiot-Regular.ttf")
         QFontDatabase.addApplicationFont("fonts\Exo2-Regular.ttf")
         QFontDatabase.addApplicationFont("fonts\Exo2-SemiBold.ttf")
@@ -36,8 +32,8 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color:  #5558AC; border-radius:40px;")
 
         self.content_widgets = {
-            "Home": Home(),
-            "Classes": Courses(),
+            # "Home": Home(),
+            "Classes": Courses(username),
             "Admin": Admin(),
             "Students": Students(),
             "Staff": staff(),
@@ -46,7 +42,7 @@ class MainWindow(QMainWindow):
         self.UiComponents()
         # self.show()
         # Admin.importing_csv.clicked.connect(self.open_file_dialog)
-        self.show_content("Home")
+        self.show_content("Classes")
         self.showMaximized()
 
     def UiComponents(self):
@@ -54,14 +50,14 @@ class MainWindow(QMainWindow):
 
         navbar = QWidget()
 
-        self.home_label = ClickableLabel("Home", navbar)
-        self.home_label.clicked.connect(lambda: self.show_content("Home"))
-        self.home_label.setFont(QFont("Broadway", 20))
-        self.home_label.move(80, 200)
-        self.home_label.setStyleSheet(
-            " QLabel::hover" "{" "color : white;" "};color: #E1D7EB;"
-        )
-        self.home_label.setCursor(Qt.PointingHandCursor)
+        # self.home_label = ClickableLabel("Home", navbar)
+        # self.home_label.clicked.connect(lambda: self.show_content("Home"))
+        # self.home_label.setFont(QFont("Broadway", 20))
+        # self.home_label.move(80, 200)
+        # self.home_label.setStyleSheet(
+        #     " QLabel::hover" "{" "color : white;" "};color: #E1D7EB;"
+        # )
+        # self.home_label.setCursor(Qt.PointingHandCursor)
 
         self.admin_label = ClickableLabel("Admin", navbar)
         self.admin_label.clicked.connect(lambda: self.show_content("Admin"))
@@ -101,12 +97,17 @@ class MainWindow(QMainWindow):
         self.stuff_label.setCursor(Qt.PointingHandCursor)
 
         navbar.setStyleSheet("background-color: #5558AC")
-        pic1 = QPixmap(
-            "images/home.png"
-        )  # Replace "image.jpg" with your image file path
-        pic1_label = QLabel(navbar)
-        pic1_label.setPixmap(pic1.scaled(50, 50))
-        pic1_label.move(10, 190)
+        # logo
+        pic0 = QPixmap("./images\download-removebg-preview.png")
+        pic0_label = QLabel(navbar)
+        pic0_label.setPixmap(pic0)
+        pic0_label.move(40, 60)
+        # pic1 = QPixmap(
+        #     "images/home.png"
+        # )  # Replace "image.jpg" with your image file path
+        # pic1_label = QLabel(navbar)
+        # pic1_label.setPixmap(pic1.scaled(50, 50))
+        # pic1_label.move(10, 190)
 
         pic2 = QPixmap("images/admin.png")
         pic2_label = QLabel(navbar)
@@ -144,6 +145,7 @@ class MainWindow(QMainWindow):
     def show_content(self, content):
         if self.current_content == content:
             return
+
         # s = staff()
         # a = Admin()
         # a.open_file_dialog()
@@ -166,19 +168,19 @@ class MainWindow(QMainWindow):
             widget.hide()
 
 
-class Home(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.label = QLabel("Home Page", self)
-        self.label.setStyleSheet("font-size: 50px; color:#492971")
-        self.label1 = QLabel("Additional Content", self)
-        self.label1.setStyleSheet("background-color: #eadade;")
-        layout = QVBoxLayout(self)
-        layout.addWidget(self.label)
-        layout.addWidget(self.label1)
+# class Home(QWidget):
+#     def __init__(self):
+#         super().__init__()
+#         self.label = QLabel("Home Page", self)
+#         self.label.setStyleSheet("font-size: 50px; color:#492971")
+#         self.label1 = QLabel("Additional Content", self)
+#         self.label1.setStyleSheet("background-color: #eadade;")
+#         layout = QVBoxLayout(self)
+#         layout.addWidget(self.label)
+#         layout.addWidget(self.label1)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainWindow()
+    window = MainWindow("Student")
     sys.exit(app.exec_())

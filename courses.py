@@ -5,20 +5,15 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
     QPushButton,
     QLineEdit,
-    QApplication,
     QLabel,
 )
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import sys
-from admin import Admin
 import pandas as pd
-
-# from hash_table import HashTable, Node
 from add_student import data_std
 from add_staff import data_staff
 
@@ -27,8 +22,9 @@ staff_list = [[], [], [], [], [], [], [], [], [], []]
 
 
 class Courses(QWidget):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
+        self.username = username
         self.courses_list = courses_list
         self.staff_list = staff_list
         self.label = QLabel("Classes Page", self)
@@ -56,7 +52,7 @@ class Courses(QWidget):
         self.showAddedCourse("Bio-Statistics", "SBE 2240", 850, 700)
         self.showAddedCourse("Fluids & Thermo Dynamics", "MEC 102", 850, 815)
 
-        self.hello("Hassnaa")
+        self.hello(self.username)
 
         # courses word label
         courses_label = QLabel(self)
@@ -869,7 +865,7 @@ class Courses(QWidget):
         # image label
         img_label = QLabel(self)
         img_label.resize(200, 210)
-        img_label.move(510, 35)
+        img_label.move(540, 35)
         img_label.setStyleSheet(
             "background-color: transparent; margin:0px; padding:0px"
         )
@@ -1070,15 +1066,6 @@ class AddNewPersontoCourseDetails(QMainWindow):
             grade = self.gradeBox.text()
         else:
             position = self.gradeBox.text()
-
-        # list = [
-        #     "Hasnaa Hossam",
-        #     "222",
-        #     "Shahd Ragab",
-        #     "111",
-        #     "Mohamed Mostafa",
-        #     "1212",
-        # ]
 
         match self.course_code:
             case "CMP 2210":

@@ -1,15 +1,11 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
-    QWidget,
     QPushButton,
     QLineEdit,
-    QInputDialog,
-    QApplication,
     QLabel,
 )
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from data import Data
@@ -25,12 +21,6 @@ class AddStaff(QMainWindow):
         self.setGeometry(500, 100, 950, 700)
         self.setWindowTitle("Add New Staff")
         self.UiComponents()
-        # self.show()
-        # self.data_file = "data.xlsx"
-        # try:
-        #     self.existing_data = pd.read_excel(self.data_file)
-        # except FileNotFoundError:
-        #     self.existing_data = pd.DataFrame()
 
     def UiComponents(self):
         p = QPalette()
@@ -150,7 +140,10 @@ class AddStaff(QMainWindow):
         self.btn.resize(200, 50)
         self.btn.move(350, 595)
         self.btn.setStyleSheet(
-            "border-radius : 25px;background-color: rgba(63,71,105) ;color:white; bold"
+            " QPushButton::hover"
+            "{"
+            "background-color : #212442;"
+            "};background-color: rgba(63,71,105); border-radius : 15px;  color:black;margin-bottom:5px;color:white  "
         )
         self.btn.setCursor(Qt.PointingHandCursor)
         self.btn.clicked.connect(self.submit_data)
@@ -160,17 +153,17 @@ class AddStaff(QMainWindow):
         self.rbtn.resize(50, 50)
         self.rbtn.move(560, 596)
         self.rbtn.setStyleSheet(
-            "border-radius : 25px;background-color: rgba(63,71,105) ;color:white; bold"
+            " QPushButton::hover"
+            "{"
+            "background-color : #212442;"
+            "};background-color: rgba(63,71,105); border-radius : 25px;"
         )
         self.rbtn.setCursor(Qt.PointingHandCursor)
-        self.icon = QIcon(
-            "images\icons8-garbage-50.png"
-        )  # Replace 'icon.png' with the path to your icon file
+        self.icon = QIcon("images\icons8-garbage-50.png")
         self.rbtn.setIcon(self.icon)
         self.rbtn.clicked.connect(self.clear_form)
 
         self.female = QLabel(self)
-
         self.female.setStyleSheet(
             "border-radius : 30px; background-color: rgba(177,161,172)"
         )
@@ -179,7 +172,6 @@ class AddStaff(QMainWindow):
         self.female.move(535, 515)
         self.female.resize(60, 60)
         self.female.setAlignment(QtCore.Qt.AlignCenter)
-
         self.femalebox = QCheckBox(self)
         self.femalebox.move(610, 535)
         self.femalebox.resize(20, 20)
@@ -289,26 +281,6 @@ class AddStaff(QMainWindow):
             iid, name, age, grade, number, email, department, None, checked, []
         )
         self.update_table(data_staff)
-        # Append new data to the existing data
-        # new_data = pd.DataFrame(
-        #     {
-        #         "Name": [name],
-        #         "Age": [age],
-        #         "ID": [grade],
-        #         "Phone Number": [number],
-        #         "Email": [email],
-        #         "Department": [department],
-        #         "Position": [iid],
-        #         "Gender": [checked],
-        #     }
-        # )
-        # self.existing_data = pd.concat(
-        #     [self.existing_data, new_data], ignore_index=True
-        # )
-
-        # # Save the combined data to the Excel file
-        # self.existing_data.to_excel(self.data_file, index=False)
-
         self.close()
 
     def update_table(self, data_staff):
@@ -336,21 +308,10 @@ class AddStaff(QMainWindow):
         self.femalebox.setChecked(False)
 
     def uncheck(self, state):
-
-        # checking if state is checked
         if state == Qt.Checked:
-
-            # if first check box is selected
             if self.sender() == self.femalebox:
-
-                # making other check box to uncheck
                 self.malebox.setChecked(False)
-            # self.checkBoxB.setChecked(False)
-
-            # if second check box is selected
             elif self.sender() == self.malebox:
-
-                # making other check box to uncheck
                 self.femalebox.setChecked(False)
 
     def show_error_message(self, message):
