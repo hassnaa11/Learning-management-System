@@ -24,22 +24,13 @@ staff_list = [[], [], [], [], [], [], [], [], [], []]
 class Courses(QWidget):
     def __init__(self, username):
         super().__init__()
+        self.setStyleSheet("background-color: #F9F8FD;")
         self.username = username
         self.courses_list = courses_list
         self.staff_list = staff_list
-        self.label = QLabel("Classes Page", self)
-        layout = QVBoxLayout(self)
-        layout.addWidget(self.label)
-        self.setWindowTitle("Classes ")
-        self.setStyleSheet("background-color:  #5558AC; border-radius:40px;")
         self.UiComponents()
 
     def UiComponents(self):
-        # back ground
-        back_ground = QLabel(self)
-        back_ground.setStyleSheet("background-color: #F9F8FD; border-radius:30px;")
-        back_ground.setGeometry(0, 0, 1640, 1150)
-
         self.showAddedCourse("Data Structures & Algorithms", "CMP 2210", 40, 355)
         self.showAddedCourse("Database", "CMP 2242", 40, 470)
         self.showAddedCourse("Chemistry", "CHE 1241", 40, 585)
@@ -58,7 +49,9 @@ class Courses(QWidget):
         courses_label = QLabel(self)
         courses_label.setText("Courses")
         courses_label.setFont(QFont("Protest Riot", 25))
-        courses_label.setStyleSheet("color: rgba(63,71,105); background-color:#F9F8FD")
+        courses_label.setStyleSheet(
+            "color: rgba(63,71,105); background-color:transparent"
+        )
         courses_label.resize(500, 60)
         courses_label.move(40, 270)
         courses_label.setBold = True
@@ -973,7 +966,6 @@ class AddNewPersontoCourseDetails(QMainWindow):
         self.checked = checked
         self.course_code = code
         self.setGeometry(890, 250, 400, 550)
-        print(self.checked)
         if self.checked == "professor":
             self.setWindowTitle("Add Staff")
         else:
@@ -1130,9 +1122,6 @@ class AddNewPersontoCourseDetails(QMainWindow):
                     )
             else:
                 self.errorDialog(f"The {self.checked} doesn't exist!")
-
-        print("courses: ", self.mycourses_list)
-        print("proff: ", self.staff_list)
 
     def errorDialog(self, message):
         dialog = QDialog(self)

@@ -13,7 +13,6 @@ from PyQt5 import QtCore
 import csv
 import sys
 from main import MainWindow
-from courses import Courses
 
 
 class login_window(QMainWindow):
@@ -40,9 +39,9 @@ class login_window(QMainWindow):
 
         # logo
         self.logo = QLabel(self)
-        self.pixmap = QPixmap("./images\download-removebg-preview.png")
+        self.pixmap = QPixmap("images\logo.png")
         self.logo.setPixmap(self.pixmap)
-        self.logo.move(40, 20)
+        self.logo.move(1300, 60)
         self.logo.resize(150, 90)
 
         # background of username & pass

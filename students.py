@@ -3,8 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-
-# import pyqtgraph as pg
+import pyqtgraph as pg
 from PyQt5 import QtGui
 from add_student import AddStudent
 from add_student import data_std
@@ -101,20 +100,7 @@ class Students(QWidget):
         headertabel.setGraphicsEffect(shadow)
 
         self.tableWidget = QTableWidget(self)
-
         self.tableWidget.setColumnCount(4)
-
-        # self.update_table()
-
-        # a = Admin()
-        # a.open_file_dialog()
-
-        # i = 4
-        # for row in range(4):
-        #     for col in range(4):
-        #         self.tableWidget.setItem(row, col, QTableWidgetItem(a.students_data[i]))
-        #         i += 1
-
         self.tableWidget.setFont(QFont("Times", 12))
         self.tableWidget.horizontalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setVisible(False)
@@ -135,29 +121,29 @@ class Students(QWidget):
         self.tableWidget.cellClicked.connect(self.show_data)
 
         # Graph
-        # self.plot_widget = pg.PlotWidget(self)
-        # self.plot_widget.setLabel("left", " No.of students")
-        # self.plot_widget.setLabel("bottom", "year")
-        # axis = self.plot_widget.getAxis("bottom")
-        # self.plot_widget.move(1100, 300)  # Set the position
-        # self.plot_widget.resize(300, 300)
-        # axis.setTicks(
-        #     [[(1, "First"), (2, "Second"), (3, "Third"), (4, "fourth"), (5, "prep")]]
-        # )
-        # self.data = {"First": 1, "Second": 2, "Third": 3, "Fourth": 4, "Prep": 5}
-        # self.x_values = [1, 2, 3, 4, 5]
-        # self.plot_widget.setBackground(QtGui.QColor(100, 50, 254, 25))
-        # self.updatee = QPushButton(self)
-        # self.updatee.setText("update graph")
-        # self.updatee.setFont(QFont("Exo2", 11))
-        # self.updatee.setGeometry(1200, 630, 120, 40)
-        # self.updatee.setStyleSheet(
-        #     " QPushButton::hover"
-        #     "{"
-        #     "background-color : #7A51A1;"
-        #     "};border-radius : 10px; background-color: #B67ADC; color: white;"
-        # )
-        # self.updatee.setCursor(Qt.PointingHandCursor)
+        self.plot_widget = pg.PlotWidget(self)
+        self.plot_widget.setLabel("left", " No.of students")
+        self.plot_widget.setLabel("bottom", "year")
+        axis = self.plot_widget.getAxis("bottom")
+        self.plot_widget.move(1170, 300)  # Set the position
+        self.plot_widget.resize(300, 300)
+        axis.setTicks(
+            [[(1, "First"), (2, "Second"), (3, "Third"), (4, "fourth"), (5, "prep")]]
+        )
+        self.data = {"First": 1, "Second": 2, "Third": 3, "Fourth": 4, "Prep": 5}
+        self.x_values = [1, 2, 3, 4, 5]
+        self.plot_widget.setBackground(QtGui.QColor(100, 50, 254, 25))
+        self.updatee = QPushButton(self)
+        self.updatee.setText("update graph")
+        self.updatee.setFont(QFont("Exo2", 11))
+        self.updatee.setGeometry(1270, 630, 120, 40)
+        self.updatee.setStyleSheet(
+            " QPushButton::hover"
+            "{"
+            "background-color : #7A51A1;"
+            "};border-radius : 10px; background-color: #B67ADC; color: white;"
+        )
+        self.updatee.setCursor(Qt.PointingHandCursor)
         # self.updatee.clicked.connect(self.update_graph)
 
     def show_data(self, row):

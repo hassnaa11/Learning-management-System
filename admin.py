@@ -147,20 +147,6 @@ class Admin(QWidget):
                         j += 1
                 i += 1
 
-        # self.tableWidget.setItem(0, 0, QTableWidgetItem("11067"))
-        # self.tableWidget.setItem(0, 1, QTableWidgetItem("Shahd Ahmed Ragab"))
-        # self.tableWidget.setItem(1, 0, QTableWidgetItem("14675"))
-        # self.tableWidget.setItem(1, 1, QTableWidgetItem("Hassnaa hussam"))
-        # self.tableWidget.setItem(2, 0, QTableWidgetItem("14789"))
-        # self.tableWidget.setItem(2, 1, QTableWidgetItem("Ayat Tarek"))
-        # self.tableWidget.setItem(3, 0, QTableWidgetItem("10923"))
-        # self.tableWidget.setItem(3, 1, QTableWidgetItem("Eman Abd El-Azeem"))
-
-        # self.tableWidget.setItem(0, 2, QTableWidgetItem("shahdd"))
-        # self.tableWidget.setItem(1, 2, QTableWidgetItem("hasnaa4"))
-        # self.tableWidget.setItem(2, 2, QTableWidgetItem("Ayatt"))
-        # self.tableWidget.setItem(3, 2, QTableWidgetItem("Eman304"))
-
         self.tableWidget.setFont(QFont("Times", 12))
         self.tableWidget.horizontalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setVisible(False)
@@ -195,29 +181,16 @@ class Admin(QWidget):
                     break
             self.tableWidget.setRowHidden(row, not match_found)
 
-    # data = []
-
     def open_file_dialog(self):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFile)
-        file_dialog.setNameFilter(
-            "All Files (*.*)"
-        )  # You can set specific file filters here
+        file_dialog.setNameFilter("All Files (*.*)")
         if file_dialog.exec_():
             self.cond = 1
             selected_files = file_dialog.selectedFiles()
             for file_path in selected_files:
-                # Process the selected file
-                # self.process_file(file_path)
                 self.selected_file = file_path
-                print("hello", self.selected_file)
-            # if self.cond == 3:
-            #     data.clear()
-            #     self.data.clear()
-            # students_data = []
-            # self.students_data = []
 
-        # self.data = []
         with open(self.selected_file, "r") as file:
             reader = csv.reader(file)
             i, k, j = 0, 0, 0
@@ -230,7 +203,6 @@ class Admin(QWidget):
                         k += 1
                     elif col_ind >= 4 and col_ind <= 6:
                         self.data.insert(i, col)
-                        print(col)
                         i += 1
                     elif col_ind >= 8 and col_ind <= 17:
                         if col != "":
@@ -238,17 +210,6 @@ class Admin(QWidget):
                         j += 1
 
             self.cond += 1
-
-        # s = staff()
-        # # s.get_data(self.data)
-        # s.update_tabel(self.data)
-        # s.tableWidget.repaint()
-        # print(self.data)
-        # print(len(self.data))
-        # print(students_data)
-        # print(len(students_data))
-        print(courses_std)
-        print(len(courses_std))
 
     def export_to_csv(self):
         file_path = "For_export.csv"

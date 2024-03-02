@@ -32,7 +32,6 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color:  #5558AC; border-radius:40px;")
 
         self.content_widgets = {
-            # "Home": Home(),
             "Classes": Courses(username),
             "Admin": Admin(),
             "Students": Students(),
@@ -40,25 +39,12 @@ class MainWindow(QMainWindow):
         }
 
         self.UiComponents()
-        # self.show()
-        # Admin.importing_csv.clicked.connect(self.open_file_dialog)
         self.show_content("Classes")
         self.showMaximized()
 
     def UiComponents(self):
         layout = QHBoxLayout()
-
         navbar = QWidget()
-
-        # self.home_label = ClickableLabel("Home", navbar)
-        # self.home_label.clicked.connect(lambda: self.show_content("Home"))
-        # self.home_label.setFont(QFont("Broadway", 20))
-        # self.home_label.move(80, 200)
-        # self.home_label.setStyleSheet(
-        #     " QLabel::hover" "{" "color : white;" "};color: #E1D7EB;"
-        # )
-        # self.home_label.setCursor(Qt.PointingHandCursor)
-
         self.admin_label = ClickableLabel("Admin", navbar)
         self.admin_label.clicked.connect(lambda: self.show_content("Admin"))
         self.admin_label.setFont(QFont("Broadway", 20))
@@ -97,17 +83,12 @@ class MainWindow(QMainWindow):
         self.stuff_label.setCursor(Qt.PointingHandCursor)
 
         navbar.setStyleSheet("background-color: #5558AC")
+
         # logo
-        pic0 = QPixmap("./images\download-removebg-preview.png")
+        pic0 = QPixmap("images\logo.png")
         pic0_label = QLabel(navbar)
         pic0_label.setPixmap(pic0)
         pic0_label.move(40, 60)
-        # pic1 = QPixmap(
-        #     "images/home.png"
-        # )  # Replace "image.jpg" with your image file path
-        # pic1_label = QLabel(navbar)
-        # pic1_label.setPixmap(pic1.scaled(50, 50))
-        # pic1_label.move(10, 190)
 
         pic2 = QPixmap("images/admin.png")
         pic2_label = QLabel(navbar)
@@ -146,13 +127,6 @@ class MainWindow(QMainWindow):
         if self.current_content == content:
             return
 
-        # s = staff()
-        # a = Admin()
-        # a.open_file_dialog()
-        # data = a.data
-        # if content == "Staff":
-        #     staff.update_tabel(self, data)
-
         self.clear_content_layout()
         content_widget = self.content_widgets.get(content)
         if content_widget:
@@ -166,18 +140,6 @@ class MainWindow(QMainWindow):
             item = self.content_layout.takeAt(0)
             widget = item.widget()
             widget.hide()
-
-
-# class Home(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         self.label = QLabel("Home Page", self)
-#         self.label.setStyleSheet("font-size: 50px; color:#492971")
-#         self.label1 = QLabel("Additional Content", self)
-#         self.label1.setStyleSheet("background-color: #eadade;")
-#         layout = QVBoxLayout(self)
-#         layout.addWidget(self.label)
-#         layout.addWidget(self.label1)
 
 
 if __name__ == "__main__":

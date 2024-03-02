@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.uic.properties import QtCore
+import pyqtgraph as pg
+from PyQt5 import QtGui
 from add_staff import AddStaff
 from add_staff import data_staff
 from staffprofile import StaffData
@@ -101,17 +103,6 @@ class staff(QMainWindow):
         self.tableWidget = QTableWidget(self)
         self.tableWidget.setColumnCount(3)
 
-        # a = Admin()
-        # # a.open_file_dialog()
-
-        # i = 3
-        # print("uiiii")
-        # # print("lenn: ", (math.sqrt(len(a.data))) - 1)
-        # for row in range(4):
-        #     for col in range(3):
-        #         tableWidget.setItem(row, col, QTableWidgetItem(a.data[i]))
-        #         i += 1
-
         self.tableWidget.resizeColumnToContents(10)
         self.tableWidget.resizeColumnToContents(5)
 
@@ -134,57 +125,31 @@ class staff(QMainWindow):
         self.tableWidget.setGraphicsEffect(shadow)
         self.tableWidget.cellClicked.connect(self.show_data)
 
-        # def get_data(self, d):
-        #     self.data = d
-        #     self.update_tabel()
-
-        # def update_tabel(self):
-        #     # self.hide()
-        #     # a = Admin()
-        #     # a.open_file_dialog()
-        #     # self.tableWidget.clearContents()
-        #     i = 3
-        #     print("uiiii")
-        #     print("DATA: ", self.data)
-        #     # print("lenn: ", (math.sqrt(len(a.data))) - 1)
-        #     for row in range(4):
-        #         for col in range(3):
-        #             self.tableWidget.setItem(row, col, QTableWidgetItem(self.data[i]))
-        #             # self.tableWidget.show()
-        #             i += 1
-        #     # self.repaint()
-        #     # self.UiComponents()
-        #     # self.show()
-
-    # def update_table(self, data_staff):
-    #     print("inside update table")
-    #     self.tableWidget.setRowCount(len(data_staff))
-    #     row = 0
-    #     for id in data_staff:
-    #         print("inside the table")
-    #         self.tableWidget.setItem(row, 0, QTableWidgetItem(data_staff[id].iid))
-    #         self.tableWidget.setItem(row, 1, QTableWidgetItem(data_staff[id].name))
-    #         self.tableWidget.setItem(row, 2, QTableWidgetItem(data_staff[id].grade))
-    #         row += 1
-    #         print("id", id)
-
-    def update_tabel(self, data):
-        # self.hide()
-        # a = Admin()
-        # a.open_file_dialog()
-        # self.tableWidget.clearContents()
-        i = 3
-        print("uiiii")
-        print("DATA: ", data)
-        # print("lenn: ", (math.sqrt(len(a.data))) - 1)
-        for row in range(4):
-            for col in range(3):
-                self.tableWidget.setItem(row, col, QTableWidgetItem(data[i]))
-                # self.tableWidget.show()
-                i += 1
-        # self.repaint()
-        # self.UiComponents()
-        # self.show()
+        # Graph
+        self.plot_widget = pg.PlotWidget(self)
+        self.plot_widget.setLabel("left", " No.of professors")
+        self.plot_widget.setLabel("bottom", "year")
+        axis = self.plot_widget.getAxis("bottom")
+        self.plot_widget.move(1170, 300)  # Set the position
+        self.plot_widget.resize(300, 300)
+        axis.setTicks(
+            [[(1, "First"), (2, "Second"), (3, "Third"), (4, "fourth"), (5, "prep")]]
+        )
+        self.data = {"First": 1, "Second": 2, "Third": 3, "Fourth": 4, "Prep": 5}
+        self.x_values = [1, 2, 3, 4, 5]
+        self.plot_widget.setBackground(QtGui.QColor(100, 50, 254, 25))
+        self.updatee = QPushButton(self)
+        self.updatee.setText("update graph")
+        self.updatee.setFont(QFont("Exo2", 11))
+        self.updatee.setGeometry(1270, 630, 120, 40)
+        self.updatee.setStyleSheet(
+            " QPushButton::hover"
+            "{"
+            "background-color : #7A51A1;"
+            "};border-radius : 10px; background-color: #B67ADC; color: white;"
+        )
+        self.updatee.setCursor(Qt.PointingHandCursor)
+        # self.updatee.clicked.connect(self.update_graph)
 
     def show_data(self, row):
         staff_id = self.tableWidget.item(row, 0).text()
