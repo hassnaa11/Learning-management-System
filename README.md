@@ -22,3 +22,11 @@ https://github.com/hassnaa11/Learning-management-System/assets/111397736/268ac9f
 - **Interactive Features:** Clicking on a student name shows profile or tooltip.
 - **Search Functionality:** Search by class, student, or professor.
 - **Data Export:** Export information to a CSV file.
+
+>
+
+## Contributors
+- [Eman Abdelazeem](https://github.com/Emaaanabdelazeemm)
+- [Shahd Ahmed](https://github.com/shahdragab89)
+- [Hassnaa Hossam](https://github.com/hassnaa11)
+
